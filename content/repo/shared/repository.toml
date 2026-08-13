@@ -1,0 +1,141 @@
+[hero.tagline.values]
+en-US = "A reusable foundation for source, automation, documentation, and publication."
+ja-JP = "ソース、オートメーション、ドキュメント、公開のための再利用可能な基盤。"
+
+[hero.branding_path.values]
+en-US = "../content/assets/branding/Billboard.svg"
+ja-JP = "../content/assets/branding/Billboard.svg"
+
+[navigation.features.values]
+en-US = "Features"
+ja-JP = "機能"
+
+[navigation.quick_start.values]
+en-US = "Quick Start"
+ja-JP = "クイックスタート"
+
+[navigation.documentation.values]
+en-US = "Documentation"
+ja-JP = "ドキュメント"
+
+[navigation.project.values]
+en-US = "Project"
+ja-JP = "プロジェクト"
+
+[navigation.languages.values]
+en-US = '''<table>
+  <tr>
+    <td align="center"><a href="README.md">English</a></td>
+    <td align="center"><a href="README.ja-JP.md">日本語</a></td>
+  </tr>
+</table>'''
+ja-JP = '''<table>
+  <tr>
+    <td align="center"><a href="README.md">English</a></td>
+    <td align="center"><a href="README.ja-JP.md">日本語</a></td>
+  </tr>
+</table>'''
+
+[sections.features.title.values]
+en-US = "Features"
+ja-JP = "機能"
+
+[sections.features.body.values]
+en-US = '''
+- Clear boundaries between authored source, private workspace state, and generated output.
+- Reusable GitHub issue intake, dependency management, validation, and publication automation.
+- Project documentation built with MkDocs and confined to `.generated/site/`.
+- Shared VS Code launch, task, extension, snippet, and portable MCP templates.
+- Automation-owned `canary`, `beta`, and `stable` branches derived from immutable `source` commits.'''
+ja-JP = '''
+- 作成されたソース、非公開のワークスペース状態、生成された出力の境界を明確に分離します。
+- GitHub Issue の受付、依存関係管理、検証、公開のための再利用可能なオートメーションを提供します。
+- MkDocs で構築したプロジェクトドキュメントを `.generated/site/` 内に限定します。
+- 共有可能な VS Code の起動設定、タスク、拡張機能、スニペット、ポータブル MCP テンプレートを提供します。
+- 不変の `source` コミットから、オートメーション管理の `canary`、`beta`、`stable` ブランチを生成します。'''
+
+[sections.quick_start.title.values]
+en-US = "Quick Start"
+ja-JP = "クイックスタート"
+
+[sections.quick_start.body.values]
+en-US = '''
+1. Create a repository from this template using the maintainer-approved template-copy workflow.
+2. Replace the Template name, description, wordmark, links, and project-specific guidance.
+3. Read the [published documentation](https://kooraseru.github.io/Template/) and [contribution guide](../CONTRIBUTING.md).
+4. Add only the source domains, tests, dependencies, and public content the project uses.
+5. Configure publication, GitHub Pages, environments, signing, and CodeQL only when the project needs them.
+6. Run the repository validation tasks before opening a pull request against `source`.
+
+Publication uses the explicit public-file whitelist in `.github/publication/config.yml`. Projects should adjust that whitelist as their public surfaces change.'''
+ja-JP = '''
+1. メンテナーが承認したテンプレート複製ワークフローを使用して、このテンプレートからリポジトリを作成します。
+2. Template の名前、説明、ワードマーク、リンク、プロジェクト固有のガイダンスを置き換えます。
+3. [公開ドキュメント](https://kooraseru.github.io/Template/)と[コントリビューションガイド](../CONTRIBUTING.md)を確認します。
+4. プロジェクトが使用するソース領域、テスト、依存関係、公開コンテンツのみを追加します。
+5. プロジェクトで必要な場合にのみ、公開、GitHub Pages、環境、署名、CodeQL を設定します。
+6. `source` 向けのプルリクエストを開く前に、リポジトリ検証タスクを実行します。
+
+公開処理では `../.github/publication/config.yml` の明示的な公開ファイル許可リストを使用します。公開範囲の変更に合わせて、この許可リストを調整してください。'''
+
+[sections.documentation.title.values]
+en-US = "Documentation"
+ja-JP = "ドキュメント"
+
+[sections.documentation.body.values]
+en-US = '''
+<table>
+  <tr><td><a href="../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td><td>Defines the contributor workflow.</td></tr>
+  <tr><td><a href="../SECURITY.md"><code>SECURITY.md</code></a></td><td>Defines private vulnerability reporting.</td></tr>
+  <tr><td><a href="https://kooraseru.github.io/Template/">Published documentation</a></td><td>Provides the generated documentation site.</td></tr>
+</table>'''
+ja-JP = '''
+<table>
+  <tr><td><a href="../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td><td>コントリビューターのワークフローを定義します。</td></tr>
+  <tr><td><a href="../SECURITY.md"><code>SECURITY.md</code></a></td><td>脆弱性を非公開で報告する方法を定義します。</td></tr>
+  <tr><td><a href="https://kooraseru.github.io/Template/">公開ドキュメント</a></td><td>生成されたドキュメントサイトを提供します。</td></tr>
+</table>'''
+
+[sections.project.title.values]
+en-US = "Project"
+ja-JP = "プロジェクト"
+
+[sections.project.introduction.values]
+en-US = "Template is maintained as a reusable repository baseline. Projects created from it should replace template identity and retain only capabilities with a responsible maintainer and active consumer."
+ja-JP = "Template は再利用可能なリポジトリ基盤として管理されています。このテンプレートから作成したプロジェクトでは、テンプレートの識別情報を置き換え、担当メンテナーと実際の利用者が存在する機能のみを残してください。"
+
+[sections.branches.title.values]
+en-US = "Branches"
+ja-JP = "ブランチ"
+
+[sections.branches.body.values]
+en-US = '''
+<table>
+  <tr><td><code>source</code></td><td>Canonical authoring branch</td></tr>
+  <tr><td><code>canary</code></td><td>Generated earliest-consumption channel</td></tr>
+  <tr><td><code>beta</code></td><td>Generated testing channel</td></tr>
+  <tr><td><code>stable</code></td><td>Generated production channel</td></tr>
+</table>'''
+ja-JP = '''
+<table>
+  <tr><td><code>source</code></td><td>正規の作成ブランチ</td></tr>
+  <tr><td><code>canary</code></td><td>生成された早期利用チャンネル</td></tr>
+  <tr><td><code>beta</code></td><td>生成されたテストチャンネル</td></tr>
+  <tr><td><code>stable</code></td><td>生成された本番チャンネル</td></tr>
+</table>'''
+
+[sections.branches.afterword.values]
+en-US = "Contributors author changes and target pull requests at `source`. Automation owns the generated branches."
+ja-JP = "コントリビューターは `source` で変更を作成し、プルリクエストの対象も `source` にします。生成ブランチはオートメーションが管理します。"
+
+[sections.license.title.values]
+en-US = "License"
+ja-JP = "ライセンス"
+
+[sections.license.body.values]
+en-US = "Licensed under the [Observer License 0.1](https://github.com/Kooraseru/Observer-License)."
+ja-JP = "[Observer License 0.1](https://github.com/Kooraseru/Observer-License) を採用しています。"
+
+[sections.contributors.title.values]
+en-US = "Contributors"
+ja-JP = "コントリビューター"

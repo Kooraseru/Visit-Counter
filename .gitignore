@@ -1,0 +1,25 @@
+# Build and export output
+.generated/
+.generated-*/
+dist/
+build/
+coverage/
+.cache/
+
+# Personal agent configuration
+AGENTS.md
+.agents/
+
+# Notes and plans
+.workspace/
+
+# Private editor settings
+.vscode/settings.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Logs
+*.log

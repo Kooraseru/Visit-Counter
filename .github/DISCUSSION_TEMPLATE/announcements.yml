@@ -1,0 +1,12 @@
+title: "[Announcement] "
+labels: [announcements]
+body:
+  - type: markdown
+    attributes:
+      value: This template is intended for project maintainers.
+  - type: textarea
+    id: announcement
+    attributes:
+      label: Announcement
+    validations:
+      required: true

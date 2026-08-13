@@ -1,0 +1,168 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Validate: Full Repository",
+      "type": "process",
+      "command": "act",
+      "args": [
+        "push",
+        "--workflows",
+        ".github/workflows/validate.yml"
+      ],
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Validate: Repository Contracts",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        ".github/scripts/validate-repository.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Test: Localization",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        ".github/scripts/test-localization.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Test: Publication Payload",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        ".github/scripts/test-publication.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Test: Publication Manifests",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        ".github/scripts/test-publication-manifests.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Validate: Shell Tooling",
+      "type": "shell",
+      "command": "bash -n .github/scripts/publish-generated-branch.sh && bash -n .github/scripts/run-actionlint.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Validate: GitHub Actions",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        ".github/scripts/run-actionlint.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Build: MkDocs Site",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        ".github/scripts/build-docs.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Publish: Local Workflow",
+      "type": "process",
+      "command": "act",
+      "args": [
+        "workflow_dispatch",
+        "--workflows",
+        ".github/workflows/publish.yml",
+        "--job",
+        "publish",
+        "--input",
+        "channel=stable",
+        "--input",
+        "version=2026.08.2-hotfix"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Refresh: Python Tooling",
+      "type": "process",
+      "command": "${command:python.interpreterPath}",
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "--upgrade",
+        "--requirement",
+        ".github/automation-requirements.txt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Refresh: Actionlint",
+      "type": "process",
+      "command": "bash",
+      "args": [
+        ".github/scripts/run-actionlint.sh",
+        "--refresh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Refresh: Local Tooling",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Refresh: Python Tooling",
+        "Refresh: Actionlint"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

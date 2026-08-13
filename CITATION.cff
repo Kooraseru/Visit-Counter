@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: If you use this repository template, please cite it using this metadata.
+title: Template
+type: software
+authors:
+  - family-names: Kooraseru
+repository-code: https://github.com/Kooraseru/Template
+url: https://kooraseru.github.io/Template/

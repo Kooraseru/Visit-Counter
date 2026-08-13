@@ -1,0 +1,7 @@
+[overview.title.values]
+en-US = "Project Documentation"
+ja-JP = "プロジェクトドキュメント"
+
+[overview.introduction.values]
+en-US = "This documentation defines repository rules, architecture, development practices, and configuration standards."
+ja-JP = "このドキュメントでは、リポジトリの規則、アーキテクチャ、開発手法、設定基準を定義します。"

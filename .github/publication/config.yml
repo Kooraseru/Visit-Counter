@@ -1,0 +1,59 @@
+# This template publishes a sanitized, reusable repository payload. Projects
+# should narrow or extend the whitelist as their public surfaces change.
+enabled: true
+
+# Paths are relative to the source root. Directories are copied recursively.
+include:
+  - .gitattributes
+  - .gitignore
+  - .vscode
+  - CODE_OF_CONDUCT.md
+  - CITATION.cff
+  - CONTRIBUTING.md
+  - LICENSE
+  - SECURITY.md
+  - content/assets
+  - src
+
+# GitHub reads these repository controls from the default branch. Preview
+# channels carry only the common user payload and publication provenance.
+channel_include:
+  canary: []
+  beta: []
+  stable:
+    - .github/DISCUSSION_TEMPLATE
+    - .github/ISSUE_TEMPLATE
+    - .github/PULL_REQUEST_TEMPLATE
+    - .github/workflows/codeql.yml
+    - .github/workflows/greetings.yml
+    - .github/workflows/labeler.yml
+    - .github/workflows/pages.yml
+    - .github/workflows/publish.yml
+    - .github/workflows/stale.yml
+    - .github/workflows/validate.yml
+    - .github/FUNDING.yml
+    - .github/SUPPORT.md
+    - .github/dependabot.yml
+    - .github/labeler.yml
+    - .github/release.yml
+required:
+  - .vscode/launch.json
+  - .vscode/tasks.json
+  - CODE_OF_CONDUCT.md
+  - CITATION.cff
+  - CONTRIBUTING.md
+  - LICENSE
+  - SECURITY.md
+  - docs/README.md
+  - content/assets/branding/Billboard.svg
+  - src
+
+# These local/source-only paths can never enter a generated branch.
+exclude:
+  - .git
+  - .generated
+  - .agents
+  - .workspace
+  - .venv
+  - AGENTS.md
+  - site
