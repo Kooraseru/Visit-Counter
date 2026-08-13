@@ -1,5 +1,4 @@
-# This template publishes a sanitized, reusable repository payload. Projects
-# should narrow or extend the whitelist as their public surfaces change.
+# Visit-Counter publishes a sanitized action payload from canonical source.
 enabled: true
 
 # Paths are relative to the source root. Directories are copied recursively.
@@ -13,6 +12,7 @@ include:
   - LICENSE
   - SECURITY.md
   - content/assets
+  - examples
   - src
 
 # GitHub reads these repository controls from the default branch. Preview
@@ -31,6 +31,7 @@ channel_include:
     - .github/workflows/publish.yml
     - .github/workflows/stale.yml
     - .github/workflows/validate.yml
+    - .github/workflows/visit-counter.yml
     - .github/FUNDING.yml
     - .github/SUPPORT.md
     - .github/dependabot.yml
@@ -46,6 +47,7 @@ required:
   - SECURITY.md
   - docs/README.md
   - content/assets/branding/Billboard.svg
+  - examples/update-visit-counter.yml
   - src
 
 # These local/source-only paths can never enter a generated branch.

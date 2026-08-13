@@ -4,18 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       language:
-        description: Language to analyze after the project adopts this template.
+        description: Language to analyze.
         required: true
         type: choice
         options:
-          - javascript-typescript
-          - python
-          - ruby
-          - go
-          - java-kotlin
-          - c-cpp
-          - csharp
-          - swift
+          - rust
 
 permissions:
   contents: read

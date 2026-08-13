@@ -13,9 +13,6 @@ on:
         required: true
         type: choice
         options:
-          - 2026.08.4-hotfix
-          - 2026.08.3-hotfix
-          - 2026.08.2-hotfix
           - 2026.08.1-regular
 
 permissions:

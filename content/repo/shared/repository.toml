@@ -1,6 +1,6 @@
 [hero.tagline.values]
-en-US = "A reusable foundation for source, automation, documentation, and publication."
-ja-JP = "ソース、オートメーション、ドキュメント、公開のための再利用可能な基盤。"
+en-US = "A GitHub-native repository view counter, built in Rust and delivered as a Docker action."
+ja-JP = "Rust と Docker Action で構築された、GitHub ネイティブのリポジトリ閲覧カウンター。"
 
 [hero.branding_path.values]
 en-US = "../content/assets/branding/Billboard.svg"
@@ -42,17 +42,17 @@ ja-JP = "機能"
 
 [sections.features.body.values]
 en-US = '''
-- Clear boundaries between authored source, private workspace state, and generated output.
-- Reusable GitHub issue intake, dependency management, validation, and publication automation.
-- Project documentation built with MkDocs and confined to `.generated/site/`.
-- Shared VS Code launch, task, extension, snippet, and portable MCP templates.
-- Automation-owned `canary`, `beta`, and `stable` branches derived from immutable `source` commits.'''
+- Uses GitHub's own repository Traffic API instead of third-party visitor tracking.
+- Preserves daily view history without double-counting GitHub's overlapping traffic window.
+- Generates a self-contained SVG from customizable digit artwork.
+- Runs as a containerized Rust GitHub Action with no external counter server.
+- Publishes generated history and counter output to an automation-owned branch.'''
 ja-JP = '''
-- 作成されたソース、非公開のワークスペース状態、生成された出力の境界を明確に分離します。
-- GitHub Issue の受付、依存関係管理、検証、公開のための再利用可能なオートメーションを提供します。
-- MkDocs で構築したプロジェクトドキュメントを `.generated/site/` 内に限定します。
-- 共有可能な VS Code の起動設定、タスク、拡張機能、スニペット、ポータブル MCP テンプレートを提供します。
-- 不変の `source` コミットから、オートメーション管理の `canary`、`beta`、`stable` ブランチを生成します。'''
+- サードパーティの訪問追跡ではなく、GitHub 自身のリポジトリ Traffic API を使用します。
+- GitHub の重複するトラフィック期間を二重計上せず、日ごとの閲覧履歴を保持します。
+- カスタマイズ可能な数字画像から自己完結型 SVG を生成します。
+- 外部カウンターサーバーを使わず、コンテナ化された Rust GitHub Action として動作します。
+- 生成された履歴とカウンターをオートメーション管理のブランチへ公開します。'''
 
 [sections.quick_start.title.values]
 en-US = "Quick Start"
@@ -60,23 +60,15 @@ ja-JP = "クイックスタート"
 
 [sections.quick_start.body.values]
 en-US = '''
-1. Create a repository from this template using the maintainer-approved template-copy workflow.
-2. Replace the Template name, description, wordmark, links, and project-specific guidance.
-3. Read the [published documentation](https://kooraseru.github.io/Template/) and [contribution guide](../CONTRIBUTING.md).
-4. Add only the source domains, tests, dependencies, and public content the project uses.
-5. Configure publication, GitHub Pages, environments, signing, and CodeQL only when the project needs them.
-6. Run the repository validation tasks before opening a pull request against `source`.
-
-Publication uses the explicit public-file whitelist in `.github/publication/config.yml`. Projects should adjust that whitelist as their public surfaces change.'''
+1. Copy [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) to `.github/workflows/update-visit-counter.yml` in the repository being counted.
+2. Create a fine-grained token restricted to that repository with Administration read permission.
+3. Store the token as the repository Actions secret `TRAFFIC_TOKEN`.
+4. Run the workflow once, then embed `https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg`.'''
 ja-JP = '''
-1. メンテナーが承認したテンプレート複製ワークフローを使用して、このテンプレートからリポジトリを作成します。
-2. Template の名前、説明、ワードマーク、リンク、プロジェクト固有のガイダンスを置き換えます。
-3. [公開ドキュメント](https://kooraseru.github.io/Template/)と[コントリビューションガイド](../CONTRIBUTING.md)を確認します。
-4. プロジェクトが使用するソース領域、テスト、依存関係、公開コンテンツのみを追加します。
-5. プロジェクトで必要な場合にのみ、公開、GitHub Pages、環境、署名、CodeQL を設定します。
-6. `source` 向けのプルリクエストを開く前に、リポジトリ検証タスクを実行します。
-
-公開処理では `../.github/publication/config.yml` の明示的な公開ファイル許可リストを使用します。公開範囲の変更に合わせて、この許可リストを調整してください。'''
+1. [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) を、計測対象リポジトリの `.github/workflows/update-visit-counter.yml` にコピーします。
+2. 対象リポジトリの Administration 読み取り権限を持つ fine-grained token を作成します。
+3. トークンをリポジトリの Actions secret `TRAFFIC_TOKEN` として保存します。
+4. ワークフローを一度実行し、`https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg` を埋め込みます。'''
 
 [sections.documentation.title.values]
 en-US = "Documentation"
@@ -87,13 +79,13 @@ en-US = '''
 <table>
   <tr><td><a href="../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td><td>Defines the contributor workflow.</td></tr>
   <tr><td><a href="../SECURITY.md"><code>SECURITY.md</code></a></td><td>Defines private vulnerability reporting.</td></tr>
-  <tr><td><a href="https://kooraseru.github.io/Template/">Published documentation</a></td><td>Provides the generated documentation site.</td></tr>
+  <tr><td><a href="https://kooraseru.github.io/Visit-Counter/">Published documentation</a></td><td>Provides the generated documentation site.</td></tr>
 </table>'''
 ja-JP = '''
 <table>
   <tr><td><a href="../CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td><td>コントリビューターのワークフローを定義します。</td></tr>
   <tr><td><a href="../SECURITY.md"><code>SECURITY.md</code></a></td><td>脆弱性を非公開で報告する方法を定義します。</td></tr>
-  <tr><td><a href="https://kooraseru.github.io/Template/">公開ドキュメント</a></td><td>生成されたドキュメントサイトを提供します。</td></tr>
+  <tr><td><a href="https://kooraseru.github.io/Visit-Counter/">公開ドキュメント</a></td><td>生成されたドキュメントサイトを提供します。</td></tr>
 </table>'''
 
 [sections.project.title.values]
@@ -101,8 +93,8 @@ en-US = "Project"
 ja-JP = "プロジェクト"
 
 [sections.project.introduction.values]
-en-US = "Template is maintained as a reusable repository baseline. Projects created from it should replace template identity and retain only capabilities with a responsible maintainer and active consumer."
-ja-JP = "Template は再利用可能なリポジトリ基盤として管理されています。このテンプレートから作成したプロジェクトでは、テンプレートの識別情報を置き換え、担当メンテナーと実際の利用者が存在する機能のみを残してください。"
+en-US = "Visit-Counter is maintained as a GitHub-native action. Canonical development happens on `source`; tested consumer releases are generated on `stable`."
+ja-JP = "Visit-Counter は GitHub ネイティブ Action として管理されています。正規の開発は `source` で行い、検証済みの利用者向けリリースは `stable` に生成されます。"
 
 [sections.branches.title.values]
 en-US = "Branches"

@@ -33,6 +33,7 @@ PUBLICATION_COMMON = {
     "LICENSE",
     "SECURITY.md",
     "content/assets",
+    "examples",
     "src",
 }
 STABLE_CONTROL_PLANE = {
@@ -51,6 +52,7 @@ STABLE_CONTROL_PLANE = {
     ".github/workflows/publish.yml",
     ".github/workflows/stale.yml",
     ".github/workflows/validate.yml",
+    ".github/workflows/visit-counter.yml",
 }
 
 

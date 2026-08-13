@@ -1,6 +1,6 @@
 # Contributing
 
-Template changes should preserve clean boundaries between authored source,
+Visit-Counter changes should preserve clean boundaries between authored source,
 private workspace state, generated output, and automation-owned branches.
 
 > [!IMPORTANT]
@@ -9,8 +9,8 @@ private workspace state, generated output, and automation-owned branches.
 
 ## Before You Start
 
-Read the [repository architecture](https://github.com/Kooraseru/Template/blob/source/docs/architecture/repository.md)
-and the [project documentation](https://kooraseru.github.io/Template/).
+Read the [repository architecture](https://github.com/Kooraseru/Visit-Counter/blob/source/docs/architecture/repository.md)
+and the [project documentation](https://kooraseru.github.io/Visit-Counter/).
 Use Discussions for open-ended ideas or support questions. Use the appropriate
 issue form for a reproducible defect or concrete proposal. Report
 vulnerabilities privately through the repository Security tab.

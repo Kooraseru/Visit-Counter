@@ -1,6 +1,6 @@
-# Template Source
+# Visit-Counter Source
 
-This is the canonical `source` branch for the reusable repository template.
+This is the canonical `source` branch for Visit-Counter.
 Contributors change source, documentation, localization, automation, and
 publication tooling here. Automation generates `canary`, `beta`, and `stable`
 channel branches from an exact source commit. Local workflow runs build the

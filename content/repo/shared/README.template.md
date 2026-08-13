@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="{{ l10n:repository.hero.branding_path }}" alt="Template" width="860">
+  <img src="{{ l10n:repository.hero.branding_path }}" alt="Visit-Counter" width="860">
   <h3>{{ l10n:repository.hero.tagline }}</h3>
 
   <p>
-    <a href="https://github.com/Kooraseru/Template"><img alt="Stars + Issues + License" src="https://shieldcn.dev/group/github/stars/Kooraseru/Template+github/Kooraseru/Template/issues+github/license/Kooraseru/Template.svg?variant=outline"></a>
+    <a href="https://github.com/Kooraseru/Visit-Counter"><img alt="Stars + Issues + License" src="https://shieldcn.dev/group/github/stars/Kooraseru/Visit-Counter+github/Kooraseru/Visit-Counter/issues+github/license/Kooraseru/Visit-Counter.svg?variant=outline"></a>
   </p>
 
-  <img src="https://counter.seku.su/cmoe?name=Kooraseru&theme=mb" alt="Visitor counter">
+  <img src="https://raw.githubusercontent.com/Kooraseru/Visit-Counter/visit-counter/views.svg" alt="Repository views">
 
   <table>
     <tr>
@@ -48,6 +48,6 @@
 
 ### {{ l10n:repository.sections.contributors.title }}
 
-<a href="https://github.com/Kooraseru/Template/graphs/contributors" target="_blank">
-  <img src="https://contrib.rocks/image?repo=Kooraseru/Template" alt="Template contributors">
+<a href="https://github.com/Kooraseru/Visit-Counter/graphs/contributors" target="_blank">
+  <img src="https://contrib.rocks/image?repo=Kooraseru/Visit-Counter" alt="Visit-Counter contributors">
 </a>

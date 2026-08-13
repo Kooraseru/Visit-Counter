@@ -17,7 +17,7 @@ LOCALE_SITES = ROOT / ".generated" / "locale-sites"
 LOCALIZED = ROOT / ".generated" / "localization"
 CONFIGURED = ROOT / ".generated" / "mkdocs-config.yml"
 DEFAULT_LOCALE = "en-US"
-SITE_BASE = "https://kooraseru.github.io/Template/"
+SITE_BASE = "https://kooraseru.github.io/Visit-Counter/"
 
 
 def stage_public_docs(locale: str) -> None:

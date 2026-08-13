@@ -1,6 +1,6 @@
-site_name: Template
+site_name: Visit-Counter
 site_description: Source policy, contributor guidance, and project documentation.
-site_url: https://kooraseru.github.io/Template/
+site_url: https://kooraseru.github.io/Visit-Counter/
 docs_dir: ../.generated/docs-source
 site_dir: ../.generated/site
 use_directory_urls: true
