@@ -15,6 +15,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write
     steps:
@@ -45,7 +46,7 @@ jobs:
       - name: Generate counter
         uses: ./src
         with:
-          traffic-token: ${{ secrets.TRAFFIC_TOKEN }}
+          token: ${{ secrets.PERSONAL_RELEASE_TOKEN }}
 
       - name: Publish counter
         shell: bash

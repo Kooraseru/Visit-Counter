@@ -92,6 +92,31 @@
       "group": "test"
     },
     {
+      "label": "Generate: Counter Visual",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "run",
+        "--quiet",
+        "--manifest-path",
+        "src/Cargo.toml",
+        "--locked",
+        "--",
+        "render",
+        "${input:counterNumber}",
+        ".generated/counter/views.svg",
+        "src/digits",
+        "6",
+        "45",
+        "100"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
       "label": "Build: MkDocs Site",
       "type": "process",
       "command": "${command:python.interpreterPath}",
@@ -163,6 +188,14 @@
         "Refresh: Actionlint"
       ],
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "counterNumber",
+      "type": "promptString",
+      "description": "Number to render in the counter visual",
+      "default": "123456"
     }
   ]
 }

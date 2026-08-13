@@ -40,8 +40,7 @@ struct Settings {
 }
 
 impl Settings {
-    fn from_environment() -> Result<Self> {
-        let arguments: Vec<String> = env::args().skip(1).collect();
+    fn from_environment(arguments: Vec<String>) -> Result<Self> {
         if arguments.len() != 6 {
             bail!("expected six action inputs, received {}", arguments.len());
         }
@@ -63,14 +62,46 @@ impl Settings {
 }
 
 fn main() {
-    if let Err(error) = run() {
+    if let Err(error) = dispatch() {
         eprintln!("github-visit-counter: {error:#}");
         std::process::exit(1);
     }
 }
 
-fn run() -> Result<()> {
-    let settings = Settings::from_environment()?;
+fn dispatch() -> Result<()> {
+    let arguments: Vec<String> = env::args().skip(1).collect();
+    if arguments.first().map(String::as_str) == Some("render") {
+        return render_command(&arguments[1..]);
+    }
+    run_action(arguments)
+}
+
+fn render_command(arguments: &[String]) -> Result<()> {
+    if arguments.len() != 6 {
+        bail!("render expects NUMBER OUTPUT DIGITS MINIMUM_DIGITS DIGIT_WIDTH DIGIT_HEIGHT");
+    }
+    let total = arguments[0]
+        .parse::<u64>()
+        .context("NUMBER must be a non-negative integer")?;
+    let output = PathBuf::from(&arguments[1]);
+    let digits = PathBuf::from(&arguments[2]);
+    let minimum_digits = positive_number("MINIMUM_DIGITS", &arguments[3])?;
+    let digit_width = positive_number("DIGIT_WIDTH", &arguments[4])?;
+    let digit_height = positive_number("DIGIT_HEIGHT", &arguments[5])?;
+    if let Some(parent) = output.parent() {
+        fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
+    }
+    fs::write(
+        &output,
+        render_svg(total, minimum_digits, digit_width, digit_height, &digits)?,
+    )
+    .with_context(|| format!("write {}", output.display()))?;
+    println!("rendered {total} to {}", output.display());
+    Ok(())
+}
+
+fn run_action(arguments: Vec<String>) -> Result<()> {
+    let settings = Settings::from_environment(arguments)?;
     let mut history = load_history(&settings.history)?;
     merge_history(
         &mut history,
@@ -93,7 +124,7 @@ fn run() -> Result<()> {
             settings.minimum_digits,
             settings.digit_width,
             settings.digit_height,
-            Path::new("/opt/github-visit-counter/digits"),
+            &digit_directory(),
         )?,
     )?;
     if let Ok(output) = env::var("GITHUB_OUTPUT") {
@@ -105,6 +136,12 @@ fn run() -> Result<()> {
     }
     println!("recorded {total} views across {} days", history.len());
     Ok(())
+}
+
+fn digit_directory() -> PathBuf {
+    env::var_os("VISIT_COUNTER_DIGITS")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("/opt/github-visit-counter/digits"))
 }
 
 fn fetch_traffic(repository: &str, token: &str) -> Result<Vec<TrafficDay>> {

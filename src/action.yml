@@ -2,7 +2,7 @@ name: GitHub Visit Counter
 description: Generate a repository view counter from GitHub's Traffic API
 
 inputs:
-  traffic-token:
+  token:
     description: Fine-grained token with repository Administration read permission
     required: true
   history:
@@ -20,11 +20,11 @@ inputs:
   digit-width:
     description: Width of each supplied digit image
     required: false
-    default: "24"
+    default: "45"
   digit-height:
     description: Height of each supplied digit image
     required: false
-    default: "36"
+    default: "100"
 
 outputs:
   total:
@@ -34,7 +34,7 @@ runs:
   using: docker
   image: Dockerfile
   args:
-    - ${{ inputs.traffic-token }}
+    - ${{ inputs.token }}
     - ${{ inputs.history }}
     - ${{ inputs.output }}
     - ${{ inputs.minimum-digits }}

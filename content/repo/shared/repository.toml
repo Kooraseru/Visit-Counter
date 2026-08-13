@@ -62,12 +62,12 @@ ja-JP = "クイックスタート"
 en-US = '''
 1. Copy [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) to `.github/workflows/update-visit-counter.yml` in the repository being counted.
 2. Create a fine-grained token restricted to that repository with Administration read permission.
-3. Store the token as the repository Actions secret `TRAFFIC_TOKEN`.
+3. Store the token as the repository Actions secret `PERSONAL_RELEASE_TOKEN`.
 4. Run the workflow once, then embed `https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg`.'''
 ja-JP = '''
 1. [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) を、計測対象リポジトリの `.github/workflows/update-visit-counter.yml` にコピーします。
 2. 対象リポジトリの Administration 読み取り権限を持つ fine-grained token を作成します。
-3. トークンをリポジトリの Actions secret `TRAFFIC_TOKEN` として保存します。
+3. トークンをリポジトリの Actions secret `PERSONAL_RELEASE_TOKEN` として保存します。
 4. ワークフローを一度実行し、`https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg` を埋め込みます。'''
 
 [sections.documentation.title.values]
