@@ -12,9 +12,14 @@ AGENTS.md
 
 # Notes and plans
 .workspace/
+/.checklists/
+/docs/local/
 
 # Private editor settings
 .vscode/settings.json
+
+# Rust
+src/target
 
 # Python
 __pycache__/

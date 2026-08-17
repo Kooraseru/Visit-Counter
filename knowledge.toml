@@ -1,0 +1,9 @@
+[environment]
+global_root = "/mnt/data/documents/systems"
+
+[project]
+shared_root = "docs/shared"
+local_root = "docs/local"
+generated_root = ".generated"
+contexts = ["language:rust"]
+

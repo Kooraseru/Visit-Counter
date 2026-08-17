@@ -107,6 +107,18 @@ jobs:
         working-directory: docs-stable
         run: python .github/scripts/build-docs.py
 
+      - name: Add visit counter assets
+        shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          git clone --depth=1 --branch visit-counter \
+            "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            visit-counter
+          mkdir -p docs-stable/.generated/site/visit-counter
+          cp visit-counter/views.svg docs-stable/.generated/site/visit-counter/
+          cp -R visit-counter/digits docs-stable/.generated/site/visit-counter/
+
       - name: Build beta documentation
         if: steps.manifests.outputs.beta_source_commit != ''
         working-directory: docs-beta

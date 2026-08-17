@@ -5,7 +5,6 @@ use std::{
 };
 
 use anyhow::{Context, Result, bail};
-use base64::{Engine, engine::general_purpose::STANDARD};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 
@@ -113,6 +112,14 @@ fn run_action(arguments: Vec<String>) -> Result<()> {
     })?;
     fs::create_dir_all(&settings.output)
         .with_context(|| format!("create {}", settings.output.display()))?;
+    let digits_output = settings.output.join("digits");
+    fs::create_dir_all(&digits_output)
+        .with_context(|| format!("create {}", digits_output.display()))?;
+    for digit in '0'..='9' {
+        let path = digit_path(Path::new("/opt/github-visit-counter/digits"), digit)?;
+        fs::copy(&path, digits_output.join(path.file_name().unwrap()))
+            .with_context(|| format!("copy {}", path.display()))?;
+    }
     fs::write(
         settings.output.join("history.json"),
         format!("{}\n", serde_json::to_string_pretty(&history)?),
@@ -204,11 +211,10 @@ fn render_svg(
     let mut nodes = String::new();
     for (index, digit) in value.chars().enumerate() {
         let path = digit_path(digits, digit)?;
-        let media = media_type(&path)?;
-        let encoded = STANDARD.encode(fs::read(&path)?);
         nodes.push_str(&format!(
-            "<image x=\"{}\" y=\"0\" width=\"{width}\" height=\"{height}\" href=\"data:{media};base64,{encoded}\" preserveAspectRatio=\"none\"/>",
-            index as u32 * width
+            "<image x=\"{}\" y=\"0\" width=\"{width}\" height=\"{height}\" href=\"digits/{}\" preserveAspectRatio=\"none\"/>",
+            index as u32 * width,
+            path.file_name().unwrap().to_string_lossy()
         ));
     }
     Ok(format!(
@@ -224,17 +230,6 @@ fn digit_path(directory: &Path, digit: char) -> Result<PathBuf> {
         }
     }
     bail!("missing counter image for digit {digit}")
-}
-
-fn media_type(path: &Path) -> Result<&'static str> {
-    match path.extension().and_then(|value| value.to_str()) {
-        Some("png") => Ok("image/png"),
-        Some("jpg" | "jpeg") => Ok("image/jpeg"),
-        Some("gif") => Ok("image/gif"),
-        Some("webp") => Ok("image/webp"),
-        Some("svg") => Ok("image/svg+xml"),
-        _ => bail!("unsupported counter image: {}", path.display()),
-    }
 }
 
 fn valid_date(value: &str) -> bool {
