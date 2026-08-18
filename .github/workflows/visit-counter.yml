@@ -72,7 +72,16 @@ jobs:
           git -C "$publish_dir" config user.name "github-actions[bot]"
           git -C "$publish_dir" config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git -C "$publish_dir" commit -m "Update repository visit counter"
-          git -C "$publish_dir" push origin HEAD:visit-counter
+          for attempt in 1 2 3; do
+            if git -C "$publish_dir" -c http.version=HTTP/1.1 push origin HEAD:visit-counter; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "Unable to publish visit-counter after $attempt attempts" >&2
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
           gh workflow run pages.yml --ref source
         env:
           GH_TOKEN: ${{ github.token }}
