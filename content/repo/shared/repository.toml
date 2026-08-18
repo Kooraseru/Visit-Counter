@@ -44,13 +44,13 @@ ja-JP = "機能"
 en-US = '''
 - Uses GitHub's own repository Traffic API instead of third-party visitor tracking.
 - Preserves daily view history without double-counting GitHub's overlapping traffic window.
-- Generates a self-contained, README-safe GIF and a Pages SVG from customizable digit artwork.
+- Generates a self-contained, README-safe GIF from customizable digit artwork.
 - Runs as a containerized Rust GitHub Action with no external counter server.
 - Publishes generated history and counter output to an automation-owned branch.'''
 ja-JP = '''
 - サードパーティの訪問追跡ではなく、GitHub 自身のリポジトリ Traffic API を使用します。
 - GitHub の重複するトラフィック期間を二重計上せず、日ごとの閲覧履歴を保持します。
-- カスタマイズ可能な数字画像から、README で安全に使える自己完結型 GIF と Pages 用 SVG を生成します。
+- カスタマイズ可能な数字画像から、README で安全に使える自己完結型 GIF を生成します。
 - 外部カウンターサーバーを使わず、コンテナ化された Rust GitHub Action として動作します。
 - 生成された履歴とカウンターをオートメーション管理のブランチへ公開します。'''
 

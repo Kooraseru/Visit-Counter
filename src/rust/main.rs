@@ -97,22 +97,17 @@ fn render_command(arguments: &[String]) -> Result<()> {
     if let Some(parent) = output.parent() {
         fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
     }
-    if output.extension().and_then(|value| value.to_str()) == Some("gif") {
-        render_gif(
-            total,
-            minimum_digits,
-            digit_width,
-            digit_height,
-            &digits,
-            &output,
-        )?;
-    } else {
-        fs::write(
-            &output,
-            render_svg(total, minimum_digits, digit_width, digit_height, &digits)?,
-        )
-        .with_context(|| format!("write {}", output.display()))?;
+    if output.extension().and_then(|value| value.to_str()) != Some("gif") {
+        bail!("render output must use the .gif extension");
     }
+    render_gif(
+        total,
+        minimum_digits,
+        digit_width,
+        digit_height,
+        &digits,
+        &output,
+    )?;
     println!("rendered {total} to {}", output.display());
     Ok(())
 }
@@ -130,27 +125,9 @@ fn run_action(arguments: Vec<String>) -> Result<()> {
     })?;
     fs::create_dir_all(&settings.output)
         .with_context(|| format!("create {}", settings.output.display()))?;
-    let digits_output = settings.output.join("digits");
-    fs::create_dir_all(&digits_output)
-        .with_context(|| format!("create {}", digits_output.display()))?;
-    for digit in '0'..='9' {
-        let path = digit_path(Path::new("/opt/github-visit-counter/digits"), digit)?;
-        fs::copy(&path, digits_output.join(path.file_name().unwrap()))
-            .with_context(|| format!("copy {}", path.display()))?;
-    }
     fs::write(
         settings.output.join("history.json"),
         format!("{}\n", serde_json::to_string_pretty(&history)?),
-    )?;
-    fs::write(
-        settings.output.join("views.svg"),
-        render_svg(
-            total,
-            settings.minimum_digits,
-            settings.digit_width,
-            settings.digit_height,
-            &digit_directory(),
-        )?,
     )?;
     render_gif(
         total,
@@ -221,31 +198,6 @@ fn merge_history(history: &mut BTreeMap<String, Day>, buckets: Vec<TrafficDay>) 
         );
     }
     Ok(())
-}
-
-fn render_svg(
-    total: u64,
-    minimum: usize,
-    width: u32,
-    height: u32,
-    digits: &Path,
-) -> Result<String> {
-    let value = format!("{total:0minimum$}");
-    let canvas_width = width
-        .checked_mul(value.len().try_into()?)
-        .context("SVG width overflow")?;
-    let mut nodes = String::new();
-    for (index, digit) in value.chars().enumerate() {
-        let path = digit_path(digits, digit)?;
-        nodes.push_str(&format!(
-            "<image x=\"{}\" y=\"0\" width=\"{width}\" height=\"{height}\" href=\"digits/{}\" preserveAspectRatio=\"none\"/>",
-            index as u32 * width,
-            path.file_name().unwrap().to_string_lossy()
-        ));
-    }
-    Ok(format!(
-        "<svg xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"{total} repository views\" width=\"{canvas_width}\" height=\"{height}\" viewBox=\"0 0 {canvas_width} {height}\"><title>{total} repository views</title>{nodes}</svg>\n"
-    ))
 }
 
 fn render_gif(

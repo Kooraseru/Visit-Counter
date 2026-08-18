@@ -104,7 +104,7 @@
         "--",
         "render",
         "${input:counterNumber}",
-        ".generated/counter/views.svg",
+        ".generated/counter/views.gif",
         "src/digits",
         "6",
         "45",
