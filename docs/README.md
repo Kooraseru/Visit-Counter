@@ -9,8 +9,8 @@ remaining sections for implementation details.
 - [Documentation standards](standards/documentation.md)
 - [Configuration standards](standards/configuration.md)
 
-## Visit counter on GitHub Pages
+## Visit counter installation
 
-Enable GitHub Pages for the repository and run the visit-counter workflow. Embed
-`https://OWNER.github.io/REPOSITORY/visit-counter/views.gif`. The workflow publishes
-a self-contained GIF that GitHub can safely proxy in README files.
+Follow [`../src/README.md`](../src/README.md) to install the self-contained
+`.github` package. The workflow publishes a README-safe GIF to the
+`visit-counter` branch.

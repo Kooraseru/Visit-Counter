@@ -15,15 +15,17 @@ case "${1:-}" in
 		;;
 esac
 
+repository_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
+workflow_paths=("$repository_root"/.github/workflows/*.yml "$repository_root/src/.github/workflows/visit-counter.yml")
+
 if [ -n "${ACTIONLINT_BIN:-}" ]; then
 	if [ ! -x "$ACTIONLINT_BIN" ]; then
 		echo "ACTIONLINT_BIN is not executable: $ACTIONLINT_BIN" >&2
 		exit 1
 	fi
-	exec "$ACTIONLINT_BIN" -color
+	exec "$ACTIONLINT_BIN" -color "${workflow_paths[@]}"
 fi
 
-repository_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 tool_root="$repository_root/.cache/actionlint"
 binary="$tool_root/actionlint"
 archive="$tool_root/$archive_name"
@@ -41,4 +43,4 @@ if [ ! -x "$binary" ]; then
 	chmod 700 "$binary"
 fi
 
-exec "$binary" -color
+exec "$binary" -color "${workflow_paths[@]}"

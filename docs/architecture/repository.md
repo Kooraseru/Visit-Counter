@@ -10,7 +10,7 @@ source
 ├── CONTRIBUTING.md       contributor workflow
 ├── content/              assets plus colocated templates and translation catalogs
 │   └── releases/         source-only authored GitHub Release records
-├── src/ and tests/       project-owned implementation surfaces
+├── src/                  copyable .github installation package and setup guide
 ├── .github/              source README, translation guide, metadata, and automation
 ├── .vscode/              shared editor and portable tool templates
 └── .generated/           ignored local output
@@ -87,7 +87,7 @@ are invalid.
 
 <table>
   <tr><th>Surface</th><th>Purpose</th><th>Editable</th></tr>
-  <tr><td><code>src/</code></td><td>Project source when the project defines it</td><td>Yes</td></tr>
+  <tr><td><code>src/</code></td><td>Copyable <code>.github</code> installation package and setup guide</td><td>Yes</td></tr>
   <tr><td><code>tests/</code></td><td>Project tests when the project defines them</td><td>Yes</td></tr>
   <tr><td><code>docs/</code></td><td>Project rules and documentation</td><td>Yes</td></tr>
   <tr><td><code>.github/TRANSLATORS.md</code></td><td>English translation workflow</td><td>Yes</td></tr>
@@ -140,9 +140,9 @@ or generator and regenerate it.
 Generated publication branches contain `.github/publication.json`, recording
 the channel, version, immutable source commit, and generation time. They exclude
 the authored `docs/` tree and retain only `content/assets/` beneath `content/`.
-They include `src/` so the generated branch exposes the project source intended
-for users. GitHub Releases use GitHub's automatic source archives and do not
-attach a separately generated project archive.
+They include `src/` so users can copy its self-contained `.github` package into
+a target repository. GitHub Releases use GitHub's automatic source archives
+and do not attach a separately generated project archive.
 The publication builder does not copy the authored source `.github/README.md`.
 It renders English repository content to `docs/README.md` and additional
 languages to `docs/README.<locale>.md`; GitHub uses the English file as the

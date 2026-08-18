@@ -35,7 +35,7 @@ jobs:
           fi
 
       - name: Generate counter
-        uses: Kooraseru/Visit-Counter/src@stable
+        uses: ./.github/actions/visit-counter
         with:
           token: ${{ secrets.PERSONAL_RELEASE_TOKEN }}
 

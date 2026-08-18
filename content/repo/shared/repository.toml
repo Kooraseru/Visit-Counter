@@ -60,15 +60,15 @@ ja-JP = "クイックスタート"
 
 [sections.quick_start.body.values]
 en-US = '''
-1. Copy [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) to `.github/workflows/update-visit-counter.yml` in the repository being counted.
+1. Follow [`src/README.md`](../src/README.md) to copy the self-contained `.github` package into the repository being counted.
 2. Create a fine-grained token restricted to that repository with Administration read permission.
 3. Store the token as the repository Actions secret `PERSONAL_RELEASE_TOKEN`.
-4. Enable GitHub Pages for the repository and run the workflow once. Embed `https://OWNER.github.io/REPOSITORY/visit-counter/views.gif`. The workflow publishes a self-contained GIF that GitHub can safely proxy in README files.'''
+4. Run the workflow once, then embed `https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.gif`.'''
 ja-JP = '''
-1. [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) を、計測対象リポジトリの `.github/workflows/update-visit-counter.yml` にコピーします。
+1. [`src/README.md`](../src/README.md) の手順に従い、自己完結型の `.github` パッケージを計測対象リポジトリへコピーします。
 2. 対象リポジトリの Administration 読み取り権限を持つ fine-grained token を作成します。
 3. トークンをリポジトリの Actions secret `PERSONAL_RELEASE_TOKEN` として保存します。
-4. リポジトリで GitHub Pages を有効にして、ワークフローを一度実行します。`https://OWNER.github.io/REPOSITORY/visit-counter/views.gif` を埋め込んでください。ワークフローは GitHub が README 内で安全にプロキシできる自己完結型 GIF を公開します。'''
+4. ワークフローを一度実行し、`https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.gif` を埋め込みます。'''
 
 [sections.documentation.title.values]
 en-US = "Documentation"

@@ -52,7 +52,7 @@ jobs:
       - name: Validate GitHub Actions syntax
         run: bash .github/scripts/run-actionlint.sh
       - name: Build and test Rust action image
-        run: docker build --tag visit-counter-action:test src
+        run: docker build --tag visit-counter-action:test src/.github/actions/visit-counter
       - name: Test publication boundaries
         run: |
           python .github/scripts/test-localization.py

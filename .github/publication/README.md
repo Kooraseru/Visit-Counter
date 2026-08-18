@@ -21,5 +21,5 @@ recursively.
 The builder creates `.github/publication.json` with the selected channel,
 release ID, immutable source commit, and generation time. Release IDs use
 `YYYY.MM.N-KIND`; the channel remains a separate publication destination. The
-whitelist includes `src/` as user-downloadable project source. The builder
-writes only beneath `.generated/repo/<channel>/`.
+whitelist includes `src/` as a copyable `.github` installation package and
+setup guide. The builder writes only beneath `.generated/repo/<channel>/`.

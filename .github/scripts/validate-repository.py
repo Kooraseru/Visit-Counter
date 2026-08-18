@@ -34,7 +34,6 @@ PUBLICATION_COMMON = {
     "LICENSE",
     "SECURITY.md",
     "content/assets",
-    "examples",
     "src",
 }
 STABLE_CONTROL_PLANE = {
@@ -69,7 +68,9 @@ def validate_python() -> list[str]:
 
 def validate_yaml() -> list[str]:
     errors: list[str] = []
-    for path in sorted(GITHUB.rglob("*.yml")):
+    paths = list(GITHUB.rglob("*.yml"))
+    paths.append(ROOT / "src" / ".github" / "workflows" / "visit-counter.yml")
+    for path in sorted(paths):
         try:
             yaml.safe_load(path.read_text(encoding="utf-8"))
         except yaml.YAMLError as error:
@@ -134,7 +135,9 @@ def validate_repository_boundaries() -> list[str]:
     errors: list[str] = []
     required = [
         GITHUB / "README.md",
-        ROOT / "src" / ".gitkeep",
+        ROOT / "src" / "README.md",
+        ROOT / "src" / ".github" / "actions" / "visit-counter" / "action.yml",
+        ROOT / "src" / ".github" / "workflows" / "visit-counter.yml",
         GITHUB / "TRANSLATORS.md",
         ROOT / "CODE_OF_CONDUCT.md",
         ROOT / "CITATION.cff",

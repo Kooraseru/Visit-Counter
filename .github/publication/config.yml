@@ -13,7 +13,6 @@ include:
   - LICENSE
   - SECURITY.md
   - content/assets
-  - examples
   - src
 
 # GitHub reads these repository controls from the default branch. Preview
@@ -49,8 +48,9 @@ required:
   - SECURITY.md
   - docs/README.md
   - content/assets/branding/Billboard.svg
-  - examples/update-visit-counter.yml
-  - src
+  - src/README.md
+  - src/.github/actions/visit-counter/action.yml
+  - src/.github/workflows/visit-counter.yml
 
 # These local/source-only paths can never enter a generated branch.
 exclude:

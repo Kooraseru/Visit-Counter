@@ -19,7 +19,7 @@ AGENTS.md
 .vscode/settings.json
 
 # Rust
-src/target
+target/
 
 # Python
 __pycache__/
