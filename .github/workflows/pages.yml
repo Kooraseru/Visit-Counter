@@ -2,18 +2,6 @@ name: Pages
 
 on:
   workflow_dispatch:
-  push:
-    branches: [source]
-    paths:
-      - ".github/TRANSLATORS.md"
-      - "content/locales.toml"
-      - "content/pages/**"
-      - ".github/mkdocs.yml"
-      - ".github/automation-requirements.txt"
-      - ".github/scripts/build-docs.py"
-      - ".github/scripts/render-localization.py"
-      - ".github/scripts/collect-publication-manifests.py"
-      - ".github/workflows/pages.yml"
 
 permissions:
   contents: read
@@ -23,8 +11,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  visit-counter:
+    name: Check visit counter assets
+    runs-on: ubuntu-latest
+    outputs:
+      available: ${{ steps.assets.outputs.available }}
+    steps:
+      - name: Check visit-counter branch
+        id: assets
+        shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          remote_url="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          if ! git clone --quiet --depth=1 --branch visit-counter "$remote_url" visit-counter; then
+            echo "Pages disabled: visit-counter branch is not available."
+            exit 0
+          fi
+          if [ ! -f visit-counter/views.svg ] || [ ! -d visit-counter/digits ]; then
+            echo "Pages disabled: visit-counter assets are incomplete."
+            exit 0
+          fi
+          if [ -z "$(find visit-counter/digits -maxdepth 1 -type f -print -quit)" ]; then
+            echo "Pages disabled: visit-counter/digits contains no assets."
+            exit 0
+          fi
+          echo "available=true" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build Pages
+    needs: visit-counter
+    if: needs.visit-counter.outputs.available == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Require source workflow ref
