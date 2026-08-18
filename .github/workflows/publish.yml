@@ -109,13 +109,19 @@ jobs:
           requested_period="${year_month/.}"
           latest_period=0
           latest_sequence=0
-          existing_tag=false
-          while IFS= read -r tag; do
-            existing="${tag#v}"
-            [[ "$existing" =~ ^([0-9]{4})\.(0[1-9]|1[0-2])\.([1-9][0-9]*)-(regular|hotfix|security)$ ]] || continue
-            if [ "$existing" = "$VERSION" ]; then
-              existing_tag=true
-            fi
+          release_exists=false
+          case "$CHANNEL" in
+            canary) desired_tag="v$VERSION-canary" ;;
+            beta) desired_tag="v$VERSION-beta" ;;
+            stable) desired_tag="v$VERSION" ;;
+          esac
+          channel_tag_exists=false
+          while IFS= read -r existing_tag; do
+            existing="${existing_tag#v}"
+            [[ "$existing" =~ ^([0-9]{4})\.(0[1-9]|1[0-2])\.([1-9][0-9]*)-(regular|hotfix|security)(-(canary|beta))?$ ]] || continue
+            existing_release="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}-${BASH_REMATCH[4]}"
+            [ "$existing_release" = "$VERSION" ] && release_exists=true
+            [ "$existing_tag" = "$desired_tag" ] && channel_tag_exists=true
             period="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
             existing_sequence="${BASH_REMATCH[3]}"
             if (( period > latest_period || (period == latest_period && existing_sequence > latest_sequence) )); then
@@ -123,23 +129,21 @@ jobs:
               latest_sequence="$existing_sequence"
             fi
           done < <(git tag --list 'v*')
+          if [ "$channel_tag_exists" = true ]; then
+            echo "Refreshing $CHANNEL; existing immutable tag $desired_tag will not move."
+            echo "tag=$desired_tag" >> "$GITHUB_OUTPUT"
+            echo "create_release=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$release_exists" = true ]; then
+            echo "Promoting existing release $VERSION to $CHANNEL as $desired_tag."
+            echo "tag=$desired_tag" >> "$GITHUB_OUTPUT"
+            echo "create_release=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           if (( requested_period < latest_period )); then
             echo "Release ID period $year_month precedes the current release period ${latest_period:0:4}.${latest_period:4:2}" >&2
             exit 1
-          fi
-          if [ "$existing_tag" = true ]; then
-            case "$CHANNEL" in
-              canary|beta)
-                echo "Refreshing $CHANNEL with existing release baseline v$VERSION; the immutable tag will not move."
-                echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
-                echo "create_release=false" >> "$GITHUB_OUTPUT"
-                exit 0
-                ;;
-              stable)
-                echo "v$VERSION already exists; stable releases are immutable" >&2
-                exit 1
-                ;;
-            esac
           fi
           expected=1
           (( requested_period == latest_period )) && expected=$((latest_sequence + 1))
@@ -147,7 +151,7 @@ jobs:
             echo "Release ID sequence must be $expected for $year_month; got $sequence" >&2
             exit 1
           fi
-          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$desired_tag" >> "$GITHUB_OUTPUT"
           echo "create_release=true" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python

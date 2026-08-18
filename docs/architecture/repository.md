@@ -110,9 +110,8 @@ exists to deliver an urgent correction. `regular` covers planned publication,
 `hotfix` delivers an urgent non-security correction, and `security` delivers a
 security correction through the project security process.
 
-Release IDs always move forward. They are not renamed, promoted, replaced, or
-partitioned by kind. The publication branch records destination state and is
-not part of release identity:
+Release IDs always move forward. They are not renamed, replaced, or partitioned
+by kind. Publication branches record independently generated destination state:
 
 <table>
   <tr><td><code>source</code></td><td>Canonical authored state</td></tr>
@@ -121,11 +120,11 @@ not part of release identity:
   <tr><td><code>stable</code></td><td>Trusted channel for normal production consumption</td></tr>
 </table>
 
-An existing release ID may be used as the baseline when refreshing the moving
-`canary` or `beta` branch. A refresh replaces that branch from a newer source
-commit but does not create, move, or replace the existing Git tag or GitHub
-Release. Publishing `stable` remains an immutable release event and therefore
-requires the next release ID.
+The same release ID may be published independently to all three channels.
+Channel snapshots use distinct tags: `vVERSION-canary`, `vVERSION-beta`, and
+`vVERSION` for stable. Every publication branch is movable and may be refreshed
+from a newer source commit. If that channel's tag already exists, a rerun moves
+only the branch and leaves the immutable tag and GitHub Release unchanged.
 
 User-specific tooling configuration, private planning, editor settings and
 state, caches, secrets, and local build output are not repository source and
