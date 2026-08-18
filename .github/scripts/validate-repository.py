@@ -27,6 +27,7 @@ PUBLICATION_COMMON = {
     ".gitattributes",
     ".gitignore",
     ".vscode",
+    "ACKNOWLEDGMENTS.md",
     "CODE_OF_CONDUCT.md",
     "CITATION.cff",
     "CONTRIBUTING.md",

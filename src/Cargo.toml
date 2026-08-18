@@ -2,7 +2,7 @@
 name = "github-visit-counter"
 version = "0.1.0"
 edition = "2024"
-license = "MIT"
+license = "ISC"
 publish = false
 
 [dependencies]

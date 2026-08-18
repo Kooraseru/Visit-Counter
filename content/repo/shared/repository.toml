@@ -125,8 +125,8 @@ en-US = "License"
 ja-JP = "ライセンス"
 
 [sections.license.body.values]
-en-US = "Licensed under the [MIT License](../LICENSE)."
-ja-JP = "[MIT License](../LICENSE) を採用しています。"
+en-US = "Original project code and documentation are licensed under the [ISC License](../LICENSE). Bundled artwork provenance is documented in [ACKNOWLEDGMENTS.md](../ACKNOWLEDGMENTS.md)."
+ja-JP = "プロジェクト独自のコードとドキュメントには [ISC License](../LICENSE) が適用されます。同梱アートワークの来歴は [ACKNOWLEDGMENTS.md](../ACKNOWLEDGMENTS.md) に記載しています。"
 
 [sections.contributors.title.values]
 en-US = "Contributors"

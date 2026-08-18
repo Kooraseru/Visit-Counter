@@ -6,6 +6,7 @@ include:
   - .gitattributes
   - .gitignore
   - .vscode
+  - ACKNOWLEDGMENTS.md
   - CODE_OF_CONDUCT.md
   - CITATION.cff
   - CONTRIBUTING.md
@@ -40,6 +41,7 @@ channel_include:
 required:
   - .vscode/launch.json
   - .vscode/tasks.json
+  - ACKNOWLEDGMENTS.md
   - CODE_OF_CONDUCT.md
   - CITATION.cff
   - CONTRIBUTING.md
