@@ -48,7 +48,6 @@ jobs:
           else
             git worktree add --detach "$publish_dir"
             git -C "$publish_dir" switch --orphan visit-counter
-            git -C "$publish_dir" rm -rf .
           fi
           cp .visit-counter/output/history.json "$publish_dir/history.json"
           cp .visit-counter/output/views.svg "$publish_dir/views.svg"
