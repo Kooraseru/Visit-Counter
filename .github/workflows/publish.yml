@@ -280,7 +280,6 @@ jobs:
           git tag -s -m "$TAG" "$TAG" "$GENERATED_COMMIT"
           git verify-tag "$TAG"
           git push --quiet "$remote_url" "refs/tags/$TAG:refs/tags/$TAG"
-          tar -czf "$RUNNER_TEMP/$TAG.tar.gz" -C ".generated/repo/$CHANNEL" .
           release_record="content/releases/${VERSION}.release.md"
           release_notes="$(<"$release_record")"
           release_args=(--verify-tag --generate-notes --notes "$release_notes" --title "$VERSION")
@@ -289,7 +288,7 @@ jobs:
           else
             release_args+=(--prerelease=false --latest)
           fi
-          gh release create "$TAG" "$RUNNER_TEMP/$TAG.tar.gz" "${release_args[@]}"
+          gh release create "$TAG" "${release_args[@]}"
 
 
   refresh-pages:

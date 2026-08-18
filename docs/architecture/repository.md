@@ -140,8 +140,9 @@ or generator and regenerate it.
 Generated publication branches contain `.github/publication.json`, recording
 the channel, version, immutable source commit, and generation time. They exclude
 the authored `docs/` tree and retain only `content/assets/` beneath `content/`.
-They include `src/` so the generated branch and attached release archive expose
-the project source intended for users.
+They include `src/` so the generated branch exposes the project source intended
+for users. GitHub Releases use GitHub's automatic source archives and do not
+attach a separately generated project archive.
 The publication builder does not copy the authored source `.github/README.md`.
 It renders English repository content to `docs/README.md` and additional
 languages to `docs/README.<locale>.md`; GitHub uses the English file as the
