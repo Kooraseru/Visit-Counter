@@ -92,6 +92,7 @@ jobs:
         id: release
         shell: bash
         env:
+          CHANNEL: ${{ inputs.channel }}
           VERSION: ${{ inputs.version }}
         run: |
           if [[ "$VERSION" == v* ]]; then
@@ -108,9 +109,13 @@ jobs:
           requested_period="${year_month/.}"
           latest_period=0
           latest_sequence=0
+          existing_tag=false
           while IFS= read -r tag; do
             existing="${tag#v}"
             [[ "$existing" =~ ^([0-9]{4})\.(0[1-9]|1[0-2])\.([1-9][0-9]*)-(regular|hotfix|security)$ ]] || continue
+            if [ "$existing" = "$VERSION" ]; then
+              existing_tag=true
+            fi
             period="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
             existing_sequence="${BASH_REMATCH[3]}"
             if (( period > latest_period || (period == latest_period && existing_sequence > latest_sequence) )); then
@@ -122,6 +127,20 @@ jobs:
             echo "Release ID period $year_month precedes the current release period ${latest_period:0:4}.${latest_period:4:2}" >&2
             exit 1
           fi
+          if [ "$existing_tag" = true ]; then
+            case "$CHANNEL" in
+              canary|beta)
+                echo "Refreshing $CHANNEL with existing release baseline v$VERSION; the immutable tag will not move."
+                echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+                echo "create_release=false" >> "$GITHUB_OUTPUT"
+                exit 0
+                ;;
+              stable)
+                echo "v$VERSION already exists; stable releases are immutable" >&2
+                exit 1
+                ;;
+            esac
+          fi
           expected=1
           (( requested_period == latest_period )) && expected=$((latest_sequence + 1))
           if [ "$sequence" -ne "$expected" ]; then
@@ -129,6 +148,7 @@ jobs:
             exit 1
           fi
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "create_release=true" >> "$GITHUB_OUTPUT"
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -226,6 +246,7 @@ jobs:
             "$SOURCE_COMMIT" "$GITHUB_OUTPUT"
 
       - name: Create signed tag and GitHub Release
+        if: steps.release.outputs.create_release == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_RELEASE_TOKEN }}

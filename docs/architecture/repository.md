@@ -121,6 +121,12 @@ not part of release identity:
   <tr><td><code>stable</code></td><td>Trusted channel for normal production consumption</td></tr>
 </table>
 
+An existing release ID may be used as the baseline when refreshing the moving
+`canary` or `beta` branch. A refresh replaces that branch from a newer source
+commit but does not create, move, or replace the existing Git tag or GitHub
+Release. Publishing `stable` remains an immutable release event and therefore
+requires the next release ID.
+
 User-specific tooling configuration, private planning, editor settings and
 state, caches, secrets, and local build output are not repository source and
 must not be committed.
