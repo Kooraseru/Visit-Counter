@@ -12,6 +12,5 @@ remaining sections for implementation details.
 ## Visit counter on GitHub Pages
 
 Enable GitHub Pages for the repository and run the visit-counter workflow. Embed
-`https://OWNER.github.io/REPOSITORY/visit-counter/views.svg`. The workflow publishes
-the SVG and its GIF digit assets together, avoiding the restrictive
-`raw.githubusercontent.com` CSP.
+`https://OWNER.github.io/REPOSITORY/visit-counter/views.gif`. The workflow publishes
+a self-contained GIF that GitHub can safely proxy in README files.

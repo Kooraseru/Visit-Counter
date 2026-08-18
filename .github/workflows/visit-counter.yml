@@ -61,6 +61,7 @@ jobs:
             git -C "$publish_dir" switch --orphan visit-counter
           fi
           cp .visit-counter/output/history.json "$publish_dir/history.json"
+          cp .visit-counter/output/views.gif "$publish_dir/views.gif"
           cp .visit-counter/output/views.svg "$publish_dir/views.svg"
           rm -rf "$publish_dir/digits"
           cp -R .visit-counter/output/digits "$publish_dir/digits"

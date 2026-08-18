@@ -1,10 +1,17 @@
 use std::{
     collections::BTreeMap,
     env, fs,
+    fs::File,
+    io::{BufReader, BufWriter},
     path::{Path, PathBuf},
 };
 
 use anyhow::{Context, Result, bail};
+use image::{
+    AnimationDecoder, Delay, Frame, ImageReader, RgbaImage,
+    codecs::gif::{GifDecoder, GifEncoder, Repeat},
+    imageops::{FilterType, overlay, resize},
+};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 
@@ -90,11 +97,22 @@ fn render_command(arguments: &[String]) -> Result<()> {
     if let Some(parent) = output.parent() {
         fs::create_dir_all(parent).with_context(|| format!("create {}", parent.display()))?;
     }
-    fs::write(
-        &output,
-        render_svg(total, minimum_digits, digit_width, digit_height, &digits)?,
-    )
-    .with_context(|| format!("write {}", output.display()))?;
+    if output.extension().and_then(|value| value.to_str()) == Some("gif") {
+        render_gif(
+            total,
+            minimum_digits,
+            digit_width,
+            digit_height,
+            &digits,
+            &output,
+        )?;
+    } else {
+        fs::write(
+            &output,
+            render_svg(total, minimum_digits, digit_width, digit_height, &digits)?,
+        )
+        .with_context(|| format!("write {}", output.display()))?;
+    }
     println!("rendered {total} to {}", output.display());
     Ok(())
 }
@@ -133,6 +151,14 @@ fn run_action(arguments: Vec<String>) -> Result<()> {
             settings.digit_height,
             &digit_directory(),
         )?,
+    )?;
+    render_gif(
+        total,
+        settings.minimum_digits,
+        settings.digit_width,
+        settings.digit_height,
+        &digit_directory(),
+        &settings.output.join("views.gif"),
     )?;
     if let Ok(output) = env::var("GITHUB_OUTPUT") {
         use std::io::Write;
@@ -220,6 +246,68 @@ fn render_svg(
     Ok(format!(
         "<svg xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"{total} repository views\" width=\"{canvas_width}\" height=\"{height}\" viewBox=\"0 0 {canvas_width} {height}\"><title>{total} repository views</title>{nodes}</svg>\n"
     ))
+}
+
+fn render_gif(
+    total: u64,
+    minimum: usize,
+    width: u32,
+    height: u32,
+    digits: &Path,
+    output: &Path,
+) -> Result<()> {
+    let value = format!("{total:0minimum$}");
+    let canvas_width = width
+        .checked_mul(value.len().try_into()?)
+        .context("GIF width overflow")?;
+    let animations = value
+        .chars()
+        .map(|digit| load_digit_frames(&digit_path(digits, digit)?, width, height))
+        .collect::<Result<Vec<_>>>()?;
+    let frame_count = animations.iter().map(Vec::len).max().unwrap_or(1);
+    let mut frames = Vec::with_capacity(frame_count);
+    for frame_index in 0..frame_count {
+        let mut canvas = RgbaImage::new(canvas_width, height);
+        let mut delay = Delay::from_numer_denom_ms(100, 1);
+        for (digit_index, animation) in animations.iter().enumerate() {
+            let frame = &animation[frame_index % animation.len()];
+            if animation.len() > 1 {
+                delay = frame.delay();
+            }
+            overlay(
+                &mut canvas,
+                frame.buffer(),
+                i64::from(digit_index as u32 * width),
+                0,
+            );
+        }
+        frames.push(Frame::from_parts(canvas, 0, 0, delay));
+    }
+    let file = File::create(output).with_context(|| format!("create {}", output.display()))?;
+    let mut encoder = GifEncoder::new(BufWriter::new(file));
+    encoder.set_repeat(Repeat::Infinite)?;
+    encoder.encode_frames(frames.into_iter())?;
+    Ok(())
+}
+
+fn load_digit_frames(path: &Path, width: u32, height: u32) -> Result<Vec<Frame>> {
+    let mut frames = if path.extension().and_then(|value| value.to_str()) == Some("gif") {
+        let decoder = GifDecoder::new(BufReader::new(File::open(path)?))?;
+        decoder.into_frames().collect_frames()?
+    } else {
+        vec![Frame::new(ImageReader::open(path)?.decode()?.to_rgba8())]
+    };
+    for frame in &mut frames {
+        if frame.buffer().dimensions() != (width, height) {
+            let delay = frame.delay();
+            let resized = resize(frame.buffer(), width, height, FilterType::Nearest);
+            *frame = Frame::from_parts(resized, 0, 0, delay);
+        }
+    }
+    if frames.is_empty() {
+        bail!("counter image has no frames: {}", path.display());
+    }
+    Ok(frames)
 }
 
 fn digit_path(directory: &Path, digit: char) -> Result<PathBuf> {
