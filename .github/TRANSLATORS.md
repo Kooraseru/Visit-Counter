@@ -53,7 +53,7 @@ Missing translations follow the locale's configured fallback order and
 ultimately use `en-US`. Unknown keys and missing English values fail rendering.
 
 Core control files—including `.github/README.md`, `CONTRIBUTING.md`, and
-`ACKNOWLEDGMENTS.md` and `LICENSE`—remain English-only and do not use localization markers.
+`LICENSE` remains English-only and does not use localization markers.
 
 Generated publication branches retain only `content/assets/` from the authored
 `content/` tree. The English repository output becomes `docs/README.md`;

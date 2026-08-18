@@ -106,9 +106,7 @@
         "${input:counterNumber}",
         ".generated/counter/views.gif",
         "src/.github/actions/visit-counter/assets/digits",
-        "6",
-        "45",
-        "100"
+        "6"
       ],
       "options": {
         "cwd": "${workspaceFolder}"

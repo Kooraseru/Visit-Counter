@@ -17,15 +17,6 @@ inputs:
     description: Minimum number of displayed digits
     required: false
     default: "6"
-  digit-width:
-    description: Width of each supplied digit image
-    required: false
-    default: "45"
-  digit-height:
-    description: Height of each supplied digit image
-    required: false
-    default: "100"
-
 outputs:
   total:
     description: All recorded repository views
@@ -38,8 +29,6 @@ runs:
     - ${{ inputs.history }}
     - ${{ inputs.output }}
     - ${{ inputs.minimum-digits }}
-    - ${{ inputs.digit-width }}
-    - ${{ inputs.digit-height }}
 
 branding:
   icon: eye
