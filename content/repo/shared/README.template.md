@@ -6,7 +6,7 @@
     <a href="https://github.com/Kooraseru/Visit-Counter"><img alt="Stars + Issues + License" src="https://shieldcn.dev/group/github/stars/Kooraseru/Visit-Counter+github/Kooraseru/Visit-Counter/issues+github/license/Kooraseru/Visit-Counter.svg?variant=outline"></a>
   </p>
 
-  <img src="https://raw.githubusercontent.com/Kooraseru/Visit-Counter/visit-counter/views.svg" alt="Repository views">
+  <img src="https://kooraseru.github.io/Visit-Counter/visit-counter/views.svg" alt="Repository views">
 
   <table>
     <tr>

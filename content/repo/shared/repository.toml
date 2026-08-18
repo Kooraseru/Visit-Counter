@@ -63,12 +63,12 @@ en-US = '''
 1. Copy [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) to `.github/workflows/update-visit-counter.yml` in the repository being counted.
 2. Create a fine-grained token restricted to that repository with Administration read permission.
 3. Store the token as the repository Actions secret `PERSONAL_RELEASE_TOKEN`.
-4. Run the workflow once, then embed `https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg`.'''
+4. Enable GitHub Pages for the repository and run the workflow once. Embed `https://OWNER.github.io/REPOSITORY/visit-counter/views.svg`. The workflow publishes `views.svg` and its GIF digit assets together, avoiding the restrictive `raw.githubusercontent.com` CSP.'''
 ja-JP = '''
 1. [`examples/update-visit-counter.yml`](../examples/update-visit-counter.yml) を、計測対象リポジトリの `.github/workflows/update-visit-counter.yml` にコピーします。
 2. 対象リポジトリの Administration 読み取り権限を持つ fine-grained token を作成します。
 3. トークンをリポジトリの Actions secret `PERSONAL_RELEASE_TOKEN` として保存します。
-4. ワークフローを一度実行し、`https://raw.githubusercontent.com/OWNER/REPOSITORY/visit-counter/views.svg` を埋め込みます。'''
+4. リポジトリで GitHub Pages を有効にして、ワークフローを一度実行します。`https://OWNER.github.io/REPOSITORY/visit-counter/views.svg` を埋め込んでください。ワークフローは `views.svg` と GIF の数字アセットを一緒に公開するため、`raw.githubusercontent.com` の厳しい CSP を回避できます。'''
 
 [sections.documentation.title.values]
 en-US = "Documentation"
