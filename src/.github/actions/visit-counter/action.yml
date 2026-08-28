@@ -1,0 +1,35 @@
+name: GitHub Visit Counter
+description: Generate a repository view counter from GitHub's Traffic API
+
+inputs:
+  token:
+    description: Fine-grained token with repository Administration read permission
+    required: true
+  history:
+    description: Existing history JSON path relative to the workspace
+    required: false
+    default: .visit-counter/history.json
+  output:
+    description: Output directory relative to the workspace
+    required: false
+    default: .visit-counter/output
+  minimum-digits:
+    description: Minimum number of displayed digits
+    required: false
+    default: "6"
+outputs:
+  total:
+    description: All recorded repository views
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.token }}
+    - ${{ inputs.history }}
+    - ${{ inputs.output }}
+    - ${{ inputs.minimum-digits }}
+
+branding:
+  icon: eye
+  color: gray-dark
